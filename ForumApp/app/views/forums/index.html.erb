@@ -1,0 +1,6 @@
+<h1>All Forums</h1>
+<ul>
+  <% @forums.each do |forum| %>
+  <li><%= link_to forum.name, forum_path(forum.id) %></li>
+  <% end %>
+</ul>

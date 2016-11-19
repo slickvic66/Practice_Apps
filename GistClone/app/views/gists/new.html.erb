@@ -1,0 +1,175 @@
+<h2>New Gist</h2>
+
+<%= simple_form_for @gist do |f| -%>
+  <%= f.hidden_field :user_id, value: cookies[:token] %>
+  <%= f.input :description %>
+  <br>
+    <h3>Gist File(s)</h3>
+    <%= button_tag "Add File", :type => "button", :class => "file-add" %>
+    <div class="gist-files">
+      <%= f.simple_fields_for :files do |file_form| -%>
+          <div class="gist-file-form">
+            <%= file_form.input :body %>
+            <%= button_tag "Remove file", :type => "button", :class => "file-remove" %>
+          </div>
+      <% end -%>
+    </div>
+    <h3>Add Tags</h3>
+    <div id="tag-inputs">
+      <div id="tag-text"></div>
+    </div>
+    <div id="tags">
+    </div>
+  <%= f.submit "Add Gist" %>
+<% end -%>
+
+<%= link_to "Back to index", gists_path %>
+
+<script>
+
+function TextSearchSelect(el, collection) {
+  var dat = this;
+
+  this.el = el;
+
+  this.collection = collection;
+
+  this.initialize = function() {
+    this.insertInput();
+    this.bindEvents();
+  };
+
+  this.insertInput = function() {
+    var input = $('<input>').attr("id", "new-tag");
+    this.el.append(input);
+  };
+
+  this.insertListPlaceholder = function() {
+    var list = $("<div>").attr("id", "list-placeholder");
+    this.el.append(list);
+  }
+
+  this.generateList = function(matches) {
+    var list = $("<ul>");
+    list.attr("id", "tag-options");
+
+    $(matches).each(function() {
+      var listItem = $("<li>").html(this.body)
+      listItem.attr("data-value", this.id);
+      listItem.addClass("temp-tag-list-item")
+      list.append(listItem);
+    });
+
+    return list;
+  };
+
+  this.createHiddenTagInput = function(val) {
+    var newHidden = $("<input>");
+    newHidden.attr("id", "gist_tag_ids_"+val);
+    newHidden.attr("name", "gist[tag_ids][]");
+    newHidden.attr("value", val);
+    newHidden.attr("type", "hidden");
+
+    return newHidden;
+  }
+
+  this.matcher = function(){
+    var matches = [];
+    var currentVal = $("#new-tag").val();
+    var re = new RegExp('^'+currentVal, "i");
+
+    $(this.collection).each(function(){
+      var result = re.exec(this.body);
+      if (result != null) {
+        matches.push(this);
+      }
+    });
+
+    return matches;
+  }
+
+  this.bindListEvent = function() {
+    $(".temp-tag-list-item").click(function() {
+      $("#list-placeholder").remove();
+      var tagId = dat.createHiddenTagInput($(this).attr("data-value"));
+      $("#tag-inputs").append(tagId);
+      $("#tag-text").append($(this).html() + "<br>");
+
+    });
+  }
+
+  this.bindEvents = function() {
+    $("#new-tag").on('focusin', function(){
+      dat.insertListPlaceholder();
+    });
+
+    $("#tags").bind("DOMSubtreeModified", function(){
+      dat.bindListEvent();
+    });
+
+    $("#new-tag").on('keyup', function(){
+      var list = dat.generateList(dat.matcher());
+      $('#list-placeholder').html(list);
+    });
+  };
+
+};
+
+function GistForm() {
+  var that = this;
+
+  this.initialize = function() {
+    this.attachFormListeners();
+    this.fetchTags();
+  };
+
+  this.fetchTags = function() {
+    $.getJSON('new.json', function(data) {
+      var items = [];
+
+      $(data).each(function() {
+        items.push(this);
+      });
+
+      console.log(items);
+
+      var searchSelect = new TextSearchSelect($("#tags"), items);
+      searchSelect.initialize();
+    });
+  };
+
+  this.removeFile = function() {
+    $(".file-remove").click(function() {
+      $(this).closest(".gist-file-form").remove();
+    });
+  };
+
+  this.addFile = function() {
+    var index = new Date()
+    var newRow = $('.gist-file-form:first-child').clone();
+    var label = newRow.find("label");
+    var input = newRow.find("input");
+
+    label.attr("for", "gist_files_attributes_"+ index.getTime() + "_body");
+    input.attr("id", "gist_files_attributes_" + index.getTime() + "_body");
+    input.attr("name", "gist[files_attributes][" + index.getTime() + "][body]");
+    $(".gist-files").append(newRow);
+  }
+
+  this.attachFormListeners = function() {
+    $(".gist-files").bind("DOMSubtreeModified", function() {
+      that.removeFile();
+    });
+
+    $(".file-add").click(function() {
+      that.addFile();
+    });
+  }
+}
+
+(function() {
+  var form = new GistForm();
+  form.initialize();
+})();
+
+</script>

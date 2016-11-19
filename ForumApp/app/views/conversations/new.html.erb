@@ -1,0 +1,18 @@
+<h1>New Thread!</h1>
+
+<%= simple_form_for @conversation do |f| -%>
+  <%= render "shared/error_messages", object: @conversation %>
+
+  <%= f.hidden_field :user_id, input_html: { value: cookies[:token]}%>
+  <%= f.hidden_field :forum_id, input_html: {value: params[:forum_id]} %>
+  <%= f.input :name, label: 'Give this thread a title :' %>
+  <br>
+  <p> Post The First Comment in This Thread:</p>
+  <%= f.simple_fields_for :posts do |posts_form| %>
+    <%= posts_form.hidden_field :conversation_id, value: @conversation.id %>
+    <%= posts_form.hidden_field :user_id, value: cookies[:token] %>
+    <%= posts_form.input :body %>
+  <% end %>
+
+  <%= f.submit "Create Thread" %>
+<% end -%>

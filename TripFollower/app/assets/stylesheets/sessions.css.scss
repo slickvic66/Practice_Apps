@@ -1,0 +1,16 @@
+// Place all the styles related to the sessions controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+@import "bootstrap";
+
+.sessions, .users {
+
+  padding-top: 20em;
+  padding-bottom: 40px;
+  background-color: #fff;
+  background-image: image-url("travelbg.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+}

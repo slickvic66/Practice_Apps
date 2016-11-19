@@ -1,0 +1,10 @@
+<% flash.each do |key, value| %>
+  <%= content_tag(:div, value, class: "alert alert-#{key}") %>
+<% end %>
+<% if signed_in? %>
+<%= link_to "Home", user_path(cookies[:token]) %> &nbsp
+<%= link_to "Log Out", logout_path %> &nbsp
+<% else %>
+<%= link_to "Log In", login_path %>&nbsp
+<% end %>
+<%= link_to "All Forums", forums_path %>

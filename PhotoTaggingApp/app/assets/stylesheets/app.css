@@ -1,0 +1,108 @@
+body{
+  /*font-family: arial, sans-serif;*/
+}
+
+.canvas {
+  width: 800px;
+  height: 600px;
+  background-image: url('./simpsons.jpg');
+  background-size: cover;
+}
+
+button{
+  width: 150px;
+  height: 50px;
+  font-size: 20px;
+}
+
+.facebox {
+  border: 3px solid black;
+  border-radius: 50px;
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  background-color: transparent;
+}
+
+.name {
+  background-color: #6699FF;
+  color: black;
+  text-align: center;
+  width: 100%;
+  border-radius: 50px;
+  position: absolute;
+  top: -10px;
+  right: -70px;
+  border: 2px solid white;
+}
+
+.input-box {
+  position: absolute;
+}
+
+input {
+  position: absolute;
+  left: -13px;
+  bottom: -25px;
+}
+
+.name-list {
+  background: white;
+  position: absolute;
+  /*bottom: -62px;*/
+  top: 126px;
+  left: -11px;
+  list-style: none;
+  text-align: center;
+  width: 119px;
+  padding-left: 0px;
+  padding-right: 0px;
+  border: 2px solid #6699FF;
+}
+
+.name-list div {
+  border-bottom: 1px solid #6699FF;
+  padding: 3px 3px;
+}
+
+.name-list div:hover {
+  background-color: gray;
+}
+
+.name-list a:hover{
+  background-color: gray;
+  color: white;
+}
+
+.name-list a:last-child {
+  border-bottom: none;
+}
+
+.name-list a {
+  text-decoration: none;
+  color: black;
+  /*padding: 3px 44px;*/
+}
+
+.closebtn {
+  background-color: #6699FF;
+  width:18px;
+  border: 2px solid white;
+  text-align: center;
+  border-radius: 10px;
+}
+
+.closebtn-a {
+  position: absolute;
+  top: -9px;
+  text-decoration: none;
+  color: black;
+}
+
+.closebtn:hover {
+  border: 2px solid red;
+}
+
+.closebtn-a:hover {
+  color: red;
+}

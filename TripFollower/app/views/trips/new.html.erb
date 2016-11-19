@@ -1,0 +1,15 @@
+<% content_for :title do "New Trip" end %>
+
+
+<%= simple_form_for @trip, html: { class: "form-signin" } do |f| -%>
+<h1 class ="form-signin-heading">Create New Trip</h1>
+<br>
+<%= f.hidden_field :user_id, value: @trip.user_id %>
+
+<%= f.input :name, placeholder: 'Trip Name', label: ''%>
+<%= f.input :start_date %>
+<%= f.input :end_date %>
+<div id="buigga">
+  <%= f.button :submit, class: 'btn btn-large btn-primary' %>
+</div>
+<% end -%>

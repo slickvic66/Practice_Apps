@@ -1,0 +1,16 @@
+<h1><%= @conversation.name %></h1>
+<%# link_to "Comment on this thread!", new_comment_path(params[:comment_thread]) %>
+<% @posts.each do |post| %>
+  <div class="post">
+    <%= post.body %>
+    <br>
+    <i>posted by <%= link_to post.user.name, user_path(post.user) %>
+    <%= time_ago_in_words(post.created_at) %> ago.</i>
+  </div>
+  <br>
+<% end %>
+
+<%= link_to "Comment on This Thread!", new_conversation_post_path(@conversation) %>
+<br>
+<br>
+<%= link_to "Back to Threads", forum_path(@conversation.forum_id) %>

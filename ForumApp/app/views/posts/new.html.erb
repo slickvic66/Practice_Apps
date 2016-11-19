@@ -1,0 +1,10 @@
+<h2>Add Post to <%= @conversation.name %> Thread in the
+  <%= @forum.name %> Forum </h2>
+
+<%= simple_form_for @post do |f| %>
+  <%= render 'shared/error_messages', object: @post %>
+  <%= f.hidden_field :user_id, value: cookies[:token] %>
+  <%= f.hidden_field :conversation_id, value: @conversation.id  %>
+  <%= f.input :body %>
+  <%= f.submit "Submit Comment" %>
+<% end %>

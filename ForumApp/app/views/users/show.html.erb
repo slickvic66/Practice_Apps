@@ -1,0 +1,25 @@
+<h2><%= @user.name %></h2>
+
+<%= link_to("Add Forum", new_forum_path(:user_id => @user.id)) %>
+
+<h2> My Forums </h2>
+<ul>
+<% @user.forums.each do |forum| %>
+<li><%= link_to forum.name, forum_path(forum.id)%></li>
+<% end %>
+</ul>
+
+<h2> My Comments </h2>
+<ul>
+<% @user.posts.each do |post| %>
+<li><%= link_to post.body, conversation_path(post.conversation_id)%></li>
+<% end %>
+</ul>
+
+
+<h2> My Threads </h2>
+<ul>
+<% @user.conversations.each do |convo| %>
+<li><%= link_to convo.name, conversation_path(convo.id) %></li>
+<% end %>
+</ul>

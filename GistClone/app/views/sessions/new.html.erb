@@ -1,0 +1,17 @@
+<h1>Log In</h1>
+
+<%= simple_form_for(:session, url: session_path) do |f| %>
+
+  <%= f.input :user_name %>
+  <%= f.submit "Submit" %>
+
+<% end %>
+
+<h2>New user?</h2>
+
+<%= simple_form_for @user do |f| %>
+
+  <%= f.input :user_name %>
+  <%= f.submit "Submit" %>
+
+<% end %>

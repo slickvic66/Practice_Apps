@@ -1,0 +1,46 @@
+<% @gists.each_with_index do |gist, ind| %>
+
+  <h3>Gist <%= ind + 1 %>. <%= gist.description %></h3>
+  <em>Tags:  <%= gist.tags.map { |tag| tag.body }.join(", ") %></em>
+  <ol>
+    <% gist.files.each_with_index do |file| %>
+
+      <li><%= file.body %></li>
+
+    <% end %>
+  </ol>
+  <div class="actions">
+    <%= button_to "Fav", gist_favorite_path(gist),
+          :form_class => "fav-form",
+          :class => "fav-btn",
+          :remote => true,
+          :hidden => @fav_gists.include?(gist.id) %>
+    <%= button_to "Hate", gist_favorite_path(gist),
+          :form_class => "hate-form",
+          :class => "hate-btn",
+          :method => "delete",
+          :remote => true,
+          :hidden => !@fav_gists.include?(gist.id) %>
+  </div>
+
+<% end %>
+
+<%= link_to "Create a Gist", new_gist_path %>
+
+<script>
+
+function toggle(self, btn1, btn2) {
+  $(self).find(btn1).hide();
+  $(self).closest(".actions").find(btn2).show();
+}
+
+$(".fav-form").on("ajax:success", function() {
+  toggle(this, ".fav-btn", ".hate-btn")
+});
+
+$(".hate-form").on("ajax:success", function() {
+  toggle(this, ".hate-btn", ".fav-btn")
+});
+
+
+</script>

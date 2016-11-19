@@ -1,0 +1,17 @@
+<%= content_for :title do "New Destination" end %>
+<h1> Add Destination </h1>
+<%= form_for @destination do |f| %>
+  <%= f.hidden_field :trip_id, value: @destination.trip_id %>
+  <%= f.label :name, "Destination Name" %>
+  <%= f.text_field :name %>
+  <br>
+  <%= f.label :location, "Where was this?" %>
+  <%= f.text_field :location %>
+  <br>
+  <%= f.label :image, "Destination Pic" %>
+  <%= f.file_field :image %>
+  <br>
+  <%= f.label :thoughts, "What did you think of the place?" %>
+  <%= f.text_area :thoughts %>
+  <%= f.submit "Submit" %>
+<% end %>

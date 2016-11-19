@@ -1,0 +1,11 @@
+<nav>
+  <ul class="nav pull-right">
+    <li> <%= link_to "Home", root_path %></li>
+    <li><%= link_to "Users", users_path %></li>
+    <% unless signed_in? %>
+      <li><%= link_to "Log In", new_session_path %></li>
+    <% else %>
+      <li><%= link_to "Log Out", signout_path %></li>
+    <% end %>
+  </ul>
+</nav>

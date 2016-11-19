@@ -1,0 +1,14 @@
+<h1> <%= @forum.name %> Forum</h1>
+
+<h2> Threads </h2>
+<% if @conversations.any? %>
+  <ul>
+  <% @conversations.each do |conversation| %>
+    <li><%= link_to conversation.name, conversation_path(conversation) %></li>
+  <% end %>
+  </ul>
+  <%= link_to "Create New Thread", new_forum_conversation_path(@forum) %>
+<% else %>
+  <span> There are no threads in this forum <%= link_to "Create first thread!",
+  new_conversation_path(:forum_id => @forum.id)%> </span>
+<% end %>

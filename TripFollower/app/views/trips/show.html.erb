@@ -1,0 +1,6 @@
+<h2>Trip: <%= @trip.name %></h2>
+<%= link_to "Back to Profile", user_path(@trip.user_id) %>
+<%= link_to "Delete Trip", '#' %>
+<h2>Where You've Been:</h2>
+<%= render @trip.destinations %>
+<%= link_to "Add Destination", new_destination_path(:trip_id => @trip.id) %>
